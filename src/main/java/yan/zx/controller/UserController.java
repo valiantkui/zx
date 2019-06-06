@@ -1,11 +1,11 @@
 package yan.zx.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import yan.zx.dao.UserDao;
 import yan.zx.entity.User;
@@ -18,6 +18,7 @@ public class UserController {
 	UserDao userDao;
 	
 	@RequestMapping(value="/login", produces="application/json;charset=utf-8")
+	@ResponseBody
 	public boolean login(String u_id,String password,HttpSession session) {
 		User user = userDao.findUserByU_id(u_id);
 		if(password!=null && password.equals(user.getPassword())) {
@@ -31,6 +32,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register", produces="application/json;charset=utf-8")
+	@ResponseBody
 	public  boolean register(String u_id,String name,String password) {
 		
 		User user = new User();

@@ -6,8 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import yan.zx.dao.ParticipateDao;
 import yan.zx.dao.TopicDao;
@@ -17,7 +18,7 @@ import yan.zx.entity.Topic;
 import yan.zx.entity.TopicInfo;
 import yan.zx.entity.User;
 
-@Controller
+@RestController
 @RequestMapping("topic")
 public class TopicController {
 	
@@ -31,8 +32,10 @@ public class TopicController {
 	private ParticipateDao participateDao;
 
 	@RequestMapping(value="/publishTopic",produces="application/json;charset=utf-8")
-	public boolean publishTopic(String name,String date,String intro,String address,HttpSession session) {
-		String u_id = (String)session.getAttribute("u_id");
+	@ResponseBody
+	public boolean publishTopic(String name,String date,String intro,String address,String u_id,HttpSession session) {
+		if(u_id==null)
+			u_id = (String)session.getAttribute("u_id");
 		Topic topic = new Topic();
 		topic.setName(name);
 		topic.setDate(date);
@@ -50,6 +53,17 @@ public class TopicController {
 	@RequestMapping(value="/findTopicListByU_id",produces="application/json;charset=utf-8")
 	public List<Topic> findTopicListByU_id(String u_id){
 		return topicDao.findTopicListByU_id(u_id);
+	}
+	
+	@RequestMapping(value="/joinTopic",produces="application/json;charset=utf-8")
+	public boolean joinTopic(int t_no,String u_id,HttpSession session) {
+		if(u_id==null) u_id=(String) session.getAttribute("u_id");
+		
+		Participate p = new Participate();
+		p.setT_no(t_no);
+		p.setU_id(u_id);
+		
+		return participateDao.addParticipate(p)>0?true:false;
 	}
 	
 	/**

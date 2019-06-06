@@ -112,7 +112,7 @@
 
    <build>
 
-		<finalName>bootfirst</finalName>
+		<finalName>zx</finalName>
 
 		<plugins>
 

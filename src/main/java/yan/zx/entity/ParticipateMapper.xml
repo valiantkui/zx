@@ -15,6 +15,11 @@
 	<select id="findParticipateListByT_no" parameterType="int" resultType="yan.zx.entity.Participate">
 		select * from participate where t_no = #{t_no}
 	</select>
+	
+	<insert id="addParticipate" parameterType="yan.zx.entity.Participate" >
+		insert into participate(t_no,u_id)
+		 values(#{t_no},#{u_id})
+	</insert>
 </mapper>
 
 

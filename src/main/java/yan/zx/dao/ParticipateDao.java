@@ -12,4 +12,6 @@ public interface ParticipateDao {
 	public List<Participate> findParticipateListByU_id(String u_id);
 	public List<Participate> findParticipateListByT_no(int  t_no);
 	
+	public int addParticipate(Participate p);
+	
 }
