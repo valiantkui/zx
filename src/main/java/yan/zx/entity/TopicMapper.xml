@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace映射文件的namespace必须等于Mapper映射器的全限定名 -->
+<mapper namespace="yan.zx.dao.TopicDao">
+
+	<insert id="addTopic" parameterType="yan.zx.entity.Topic">
+		insert into topic(name,date,address,intro,u_id)
+		 values(#{name},#{date},#{address},#{intro},#{u_id})
+	
+	</insert>
+	
+	<select id="findTopicByT_no" parameterType="int" resultType="yan.zx.entity.Topic">
+		select * from topic where t_no = #{t_no}
+	</select>
+	
+	<select id="findTopicListByU_id" parameterType="String" resultType="yan.zx.entity.Topic">
+		select * from topic where u_id = #{u_id}
+	</select>
+	
+	<select id="findTopicListByT_noList" parameterType="java.util.List" resultType="yan.zx.entity.Topic">
+	
+		select * from topic 
+		where t_no in
+		 <foreach collection="t_noList" index="index" item="t_no" separator="," open="(" close=")">
+			#{t_no}
+		 </foreach>
+	
+	</select>
+	
+</mapper>
+
+
+
